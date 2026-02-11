@@ -1,5 +1,5 @@
 # courses_SQL_Server_PostgreSQL
-markdown
+# markdown
 
 # 📋 RAPPORT D'AUDIT D'INTÉGRATION : CacaoLogistiqueDB (PostgreSQL) ↔ CacaoProductionDB (SQL Server)
 
@@ -31,7 +31,7 @@ markdown
 -- - ProduitCode_PG (VARCHAR(50)) → référence vers inventaire_logistique
 -- - QuantiteUtilisee
 -- - DateUtilisation
-
+markdown
 📌 Problème n°2 : Rupture de traçabilité Fournisseurs ↔ Clients
 Constat	Impact	Niveau de criticité
 Les fournisseurs (PG) et les Clients (SS) sont deux entités totalement déconnectées	Impossible d'analyser le cycle complet : achat d'intrants → production → vente à l'export	🔴 CRITIQUE
@@ -53,7 +53,7 @@ sql
 -- Ajouter dans la table `UtilisationIntrants` (à créer) :
 -- - FournisseurID_PG (INT) → référence vers fournisseurs PostgreSQL
 -- Permettant de répondre : "Quel fournisseur a vendu les intrants utilisés sur cette plantation ?"
-
+markdown
 📌 Problème n°3 : Stock de fèves inexistant côté SQL Server
 Constat	Impact	Niveau de criticité
 Les fèves récoltées (Recoltes.PoidsFevesFraiches) disparaissent après l'enregistrement	Aucune gestion de stock, aucune liaison avec les Exportations	🔴 CRITIQUE
@@ -80,7 +80,7 @@ sql
 -- - LotID (nouveau champ à créer dans Exportations)
 -- - DateSortie
 -- Permettant de tracer : Récolte → Stockage → Affectation à un contrat d'export
-
+markdown
 📌 Problème n°4 : Maintenance des équipements sans lien avec les plantations
 Constat	Impact	Niveau de criticité
 maintenance_equipements (PG) enregistre des interventions sur du matériel	On ne sait pas où se trouve ce matériel ni qui l'utilise	🟠 ÉLEVÉ
@@ -104,7 +104,7 @@ sql
 -- - DateDebut
 -- - DateFin (NULL si toujours affecté)
 -- - Responsable
-
+markdown
 📌 Problème n°5 : Certifications et traçabilité qualité
 Constat	Impact	Niveau de criticité
 Exportations.Certificats (SS) mentionne 'BIO, Fairtrade, UTZ'	Aucune preuve traçable que ces certifications sont respectées	🟠 ÉLEVÉ
@@ -124,7 +124,7 @@ sql
 -- - Table `ControleQualite` liée à `Recoltes` et à `maintenance_equipements` (PG)
 -- - Champ `LotCertification` dans `Exportations` pour traçabilité descendante
 -- - Vue matérialisée côté PostgreSQL des lots certifiés
-
+markdown
 📌 Problème n°6 : Vue PostgreSQL sous-optimisée
 Constat	Impact	Niveau de criticité
 La vue vw_CommandesFournisseurs_PostgreSQL n'inclut pas les données stratégiques	Les utilisateurs SQL Server n'ont pas accès à l'état réel des stocks et équipements	🟡 MOYEN
@@ -164,7 +164,7 @@ FROM OPENQUERY(POSTGRES_LINKED_SERVER, '
     JOIN inventaire_logistique i ON cf.commande_id = i.commande_id
     LEFT JOIN maintenance_equipements me ON i.inventaire_id = me.equipement_id
 ');
-
+markdown
 📊 SYNTHÈSE DES RUPTURES D'INTÉGRATION
 ID	Problème	Tables concernées	Solution	Criticité
 P1	Absence de clé commune	inventaire_logistique ↔ Plantations	Table EmballageUtilise + UtilisationIntrants	🔴
@@ -173,6 +173,7 @@ P3	Stock fèves inexistant	Recoltes ↔ Exportations	Création StockFeves avec L
 P4	Maintenance sans localisation	maintenance_equipements ↔ Plantations	Création AffectationEquipement	🟠
 P5	Certifications non traçables	Exportations.Certificats ↔ inventaire_logistique	Table ControleQualite + traçabilité lot	🟠
 P6	Vue PostgreSQL incomplète	vw_CommandesFournisseurs_PostgreSQL	Refonte de la vue avec stocks et maintenance	🟡
+markdown
 🎯 PLAN D'ACTION PRIORISÉ
 🔴 Priorité 1 - URGENT (Sprint 1)
 

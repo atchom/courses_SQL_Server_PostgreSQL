@@ -32,6 +32,8 @@
 -- - QuantiteUtilisee
 -- - DateUtilisation
 
+---
+
 ###  📌 Problème n°2 : Rupture de traçabilité Fournisseurs ↔ Clients
 Constat	Impact	Niveau de criticité
 Les fournisseurs (PG) et les Clients (SS) sont deux entités totalement déconnectées	Impossible d'analyser le cycle complet : achat d'intrants → production → vente à l'export
@@ -82,7 +84,7 @@ sql
 -- - LotID (nouveau champ à créer dans Exportations)
 -- - DateSortie
 -- Permettant de tracer : Récolte → Stockage → Affectation à un contrat d'export
-# markdown
+####
 📌 Problème n°4 : Maintenance des équipements sans lien avec les plantations
 Constat	Impact	Niveau de criticité
 maintenance_equipements (PG) enregistre des interventions sur du matériel	On ne sait pas où se trouve ce matériel ni qui l'utilise	🟠 ÉLEVÉ
@@ -106,7 +108,8 @@ sql
 -- - DateDebut
 -- - DateFin (NULL si toujours affecté)
 -- - Responsable
-# markdown
+###
+---
 📌 Problème n°5 : Certifications et traçabilité qualité
 Constat	Impact	Niveau de criticité
 Exportations.Certificats (SS) mentionne 'BIO, Fairtrade, UTZ'	Aucune preuve traçable que ces certifications sont respectées	🟠 ÉLEVÉ

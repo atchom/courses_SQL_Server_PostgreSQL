@@ -31,8 +31,8 @@
 -- - ProduitCode_PG (VARCHAR(50)) → référence vers inventaire_logistique
 -- - QuantiteUtilisee
 -- - DateUtilisation
-# markdown
-📌 Problème n°2 : Rupture de traçabilité Fournisseurs ↔ Clients
+
+###  📌 Problème n°2 : Rupture de traçabilité Fournisseurs ↔ Clients
 Constat	Impact	Niveau de criticité
 Les fournisseurs (PG) et les Clients (SS) sont deux entités totalement déconnectées	Impossible d'analyser le cycle complet : achat d'intrants → production → vente à l'export
 
